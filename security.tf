@@ -16,7 +16,7 @@ resource "aws_security_group_rule" "alb_inbound_https" {
   protocol          = "tcp"
   
   security_group_id = aws_security_group.alb_sg.id
-  #cidr_blocks       = "0.0.0.0/0"
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 # Security Group for EC2 Instances
@@ -39,6 +39,7 @@ resource "aws_security_group_rule" "ec2_inbound_from_alb" {
   security_group_id        = aws_security_group.ec2_sg.id
   source_security_group_id = aws_security_group.alb_sg.id
 }
+
 
 
 
