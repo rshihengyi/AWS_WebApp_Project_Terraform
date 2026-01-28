@@ -40,6 +40,13 @@ resource "aws_security_group_rule" "ec2_inbound_from_alb" {
   source_security_group_id = aws_security_group.alb_sg.id
 }
 
+# Security Group for SSH access to EC2 Instances
+resource "aws_security_group_rule" "ec2_inbound_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
 
-
-
+  security_group_id = aws_security_group.ec2_sg.id
+  cidr_blocks       = ["129.2.89.121/32"]
+}
