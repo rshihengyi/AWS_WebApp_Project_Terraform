@@ -20,10 +20,9 @@ resource "aws_instance" "web_app" {
 
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   subnet_id = aws_subnet.public_1.id
-  key_name = aws_key_pair.ec2_key
+  key_name = aws_key_pair.ec2_key.key_name
 
   tags = {
     Name = "WebApp"
   }
-
 }
