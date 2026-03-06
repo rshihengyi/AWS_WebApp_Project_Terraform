@@ -1,0 +1,21 @@
+<h1>AWS Web Application Infrastructure (Terraform)</h1>
+
+This project provisions a simple, production-style AWS web infrastructure using Terraform.
+The architecture deploys a Dockerized web application on an EC2 instance behind an Application Load Balancer (ALB), with traffic routed through Route 53 and secured via HTTPS.
+
+The goal of this project is to demonstrate Infrastructure as Code (IaC) practices and core AWS networking concepts such as VPC design, load balancing, and security groups. 
+Through this project, I aimed to strengthen my understanding of cloud architecture, automation, security configuration, and scalable application deployment while working
+with tools such as Terraform, Docker, and cloud service providers.
+
+
+<h1>Current Terraform Components</h1>
+
+- VPC
+- EC2
+- Security Groups
+- Application Load Balancer
+
+<h1>Components to Implement</h1>
+
+- Route 53 
+- ACM Certification
