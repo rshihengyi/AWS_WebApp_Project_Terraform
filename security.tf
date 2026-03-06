@@ -11,7 +11,7 @@ resource "aws_security_group" "alb_sg" {
 
 resource "aws_security_group_rule" "alb_inbound_https" {
   type              = "ingress"
-  from_port         = 443
+  from_port         = 443               # defines port range for ingress
   to_port           = 443
   protocol          = "tcp"
   
@@ -50,3 +50,4 @@ resource "aws_security_group_rule" "ec2_inbound_ssh" {
   security_group_id = aws_security_group.ec2_sg.id
   cidr_blocks       = ["129.2.89.121/32"]
 }
+
