@@ -19,6 +19,16 @@ resource "aws_security_group_rule" "alb_inbound_https" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
+resource "aws_vpc_security_group_egress_rule" "alb_outbound_https" {
+  from_port         = 8080               # defines port range for egress
+  to_port           = 8080
+  ip_protocol       = "tcp"
+
+  security_group_id = aws_security_group.alb_sg.id
+  referenced_security_group_id = aws_security_group.ec2_sg.id
+}
+
+
 # Security Group for EC2 Instances
 resource "aws_security_group" "ec2_sg" {
   name        = "ec2_security_group"

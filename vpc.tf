@@ -13,6 +13,7 @@ resource "aws_subnet" "public_1" {
  tags = {
    Name = "public-1-subnet"
  }
+ availability_zone = "us-east-1a" 
 }
 
 resource "aws_subnet" "public_2" {
@@ -22,6 +23,7 @@ resource "aws_subnet" "public_2" {
  tags = {
    Name = "public-2-subnet"
  }
+ availability_zone = "us-east-1b"
 }
 
 # Internet Gateway

@@ -1,0 +1,15 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Sensitive variables
+*.tfvars
+*.tfvars.json
+
+# Terraform lock (optional)
+.terraform.lock.hcl
+
+# OS files
+.DS_Store

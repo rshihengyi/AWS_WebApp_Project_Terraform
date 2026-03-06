@@ -8,8 +8,7 @@ resource "aws_alb" "lb_web" {
   internal        = false
   load_balancer_type = "application"
   security_groups = [aws_security_group.alb_sg.id]
-  subnets         = aws_subnet.public_2.id
-
+  subnets         = [aws_subnet.public_1.id, aws_subnet.public_2.id]
   tags = {
     Name = "WebALB"
   }
@@ -23,11 +22,11 @@ resource "aws_lb_target_group" "alb_to_ec2" {
 }
 
 resource "aws_lb_listener" "listen2https" {
-  load_balancer_arn = aws_lb.listen2https.arn
+  load_balancer_arn = aws_alb.lb_web.arn
   port              = "443"                                     # alb listens to https traffic 
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+#  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:us-east-1:536984667329:certificate/30c144f4-2eb0-46a0-be47-66abf6404ab3"
 
   default_action {
     type             = "forward"                                # alb will send incoming request to targets
