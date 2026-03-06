@@ -38,8 +38,9 @@ resource "aws_lb_listener" "listen2https" {
 resource "aws_lb_target_group_attachment" "alb_tg_attach" {     # "attaches" target group to ec2
   target_group_arn = aws_lb_target_group.alb_to_ec2.arn
   target_id        = aws_instance.web_app.id
-  port             = 80                                         # port alb "talks" to
+  port             = 8080                                       # port alb "talks" to
 }
+
 
 
 
