@@ -7,7 +7,7 @@ The goal of this project is to demonstrate Infrastructure as Code (IaC) practice
 Through this project, I aimed to strengthen my understanding of cloud architecture, automation, security configuration, and scalable application deployment while working
 with tools such as Terraform, Docker, and cloud service providers.
 
-<h1>Current Terraform Components</h1>
+<h1>Terraform Components</h1>
 
 - VPC
 - EC2
