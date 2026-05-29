@@ -9,25 +9,32 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
-resource "aws_security_group_rule" "alb_inbound_https" {
-  type              = "ingress"
-  from_port         = 443               # defines port range for ingress
-  to_port           = 443
-  protocol          = "tcp"
-  
-  security_group_id = aws_security_group.alb_sg.id
-  cidr_blocks       = ["0.0.0.0/0"]
-}
-
-resource "aws_vpc_security_group_egress_rule" "alb_outbound_https" {
-  from_port         = 8080               # defines port range for egress
-  to_port           = 8080
-  ip_protocol       = "tcp"
+resource "aws_vpc_security_group_ingress_rule" "alb_inbound_https_ipv4" {
+  from_port = 443
+  to_port   = 443
+  ip_protocol  = "tcp"
 
   security_group_id = aws_security_group.alb_sg.id
-  referenced_security_group_id = aws_security_group.ec2_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "alb_inbound_https_ipv6" {
+  from_port = 443
+  to_port   = 443
+  ip_protocol  = "tcp"
+
+  security_group_id = aws_security_group.alb_sg.id
+  cidr_ipv6         = "::/0"
+}
+
+resource "aws_vpc_security_group_egress_rule" "alb_outbound" {
+  from_port     = 8080
+  to_port       = 8080
+  ip_protocol   = "tcp"
+
+  security_group_id             = aws_security_group.alb_sg.id
+  referenced_security_group_id  = aws_security_group.ec2_sg.id
+}
 
 # Security Group for EC2 Instances
 resource "aws_security_group" "ec2_sg" {
@@ -40,24 +47,34 @@ resource "aws_security_group" "ec2_sg" {
   }
 }
 
-resource "aws_security_group_rule" "ec2_inbound_from_alb" {
-  type                     = "ingress"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "tcp"
+# Rule to allow ALB to access EC2
+resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_from_alb" {
+  from_port     = 8080
+  to_port       = 8080
+  ip_protocol   = "tcp"
 
-  security_group_id        = aws_security_group.ec2_sg.id
-  source_security_group_id = aws_security_group.alb_sg.id
+  security_group_id             = aws_security_group.ec2_sg.id
+  referenced_security_group_id  = aws_security_group.alb_sg.id
+}
+
+# Rule to allow download things. "Recall egress: Who I can make connections to"
+resource "aws_vpc_security_group_egress_rule" "ec2_outbound_from_internet" {
+  ip_protocol   = "-1"
+
+  security_group_id             = aws_security_group.ec2_sg.id
+  cidr_ipv4                     = "0.0.0.0/0"
 }
 
 # Rule for SSH access to EC2 Instances
-resource "aws_security_group_rule" "ec2_inbound_ssh" {
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-
-  security_group_id = aws_security_group.ec2_sg.id
-  cidr_blocks       = ["129.2.89.121/32"]
+data "http" "my_ip" {
+  url = "https://checkip.amazonaws.com"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_ssh" {
+  from_port = 22
+  to_port   = 22
+  ip_protocol  = "tcp"
+
+  security_group_id   = aws_security_group.ec2_sg.id
+  cidr_ipv4           = "${chomp(data.http.my_ip.response_body)}/32"
+}

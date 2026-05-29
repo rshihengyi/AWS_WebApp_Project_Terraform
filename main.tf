@@ -4,11 +4,11 @@ provider "aws" {
 
 
 resource "aws_alb" "lb_web" {
-  name            = "web-alb"
-  internal        = false
+  name               = "web-alb"
+  internal           = false
   load_balancer_type = "application"
-  security_groups = [aws_security_group.alb_sg.id]
-  subnets         = [aws_subnet.public_1.id, aws_subnet.public_2.id]
+  security_groups    = [aws_security_group.alb_sg.id]
+  subnets            = [aws_subnet.public_1.id, aws_subnet.public_2.id]
   tags = {
     Name = "WebALB"
   }
@@ -16,31 +16,29 @@ resource "aws_alb" "lb_web" {
 
 resource "aws_lb_target_group" "alb_to_ec2" {
   name     = "alb2ec2"
-  port     = 8080                                               # Send to port 8080 of target
+  port     = 8080 # Send to port 8080 of target
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 }
 
 resource "aws_lb_listener" "listen2https" {
   load_balancer_arn = aws_alb.lb_web.arn
-  port              = "443"                                     # alb listens to https traffic 
+  port              = "443" # alb listens to https traffic 
   protocol          = "HTTPS"
-#  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:acm:us-east-1:536984667329:certificate/30c144f4-2eb0-46a0-be47-66abf6404ab3"
+  #  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn = aws_acm_certificate_validation.dev_cert_validation.certificate_arn
 
   default_action {
-    type             = "forward"                                # alb will send incoming request to targets
+    type             = "forward" # alb will send incoming request to targets
     target_group_arn = aws_lb_target_group.alb_to_ec2.arn
   }
 }
 
-resource "aws_lb_target_group_attachment" "alb_tg_attach" {     # "attaches" target group to ec2
+resource "aws_lb_target_group_attachment" "alb_tg_attach" { # "attaches" target group to ec2
   target_group_arn = aws_lb_target_group.alb_to_ec2.arn
   target_id        = aws_instance.web_app.id
-  port             = 8080                                       # port alb "talks" to
+  port             = 8080 # port alb "talks" to
 }
-
-
 
 
 
