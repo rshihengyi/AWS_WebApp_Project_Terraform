@@ -10,30 +10,30 @@ resource "aws_security_group" "alb_sg" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "alb_inbound_https_ipv4" {
-  from_port = 443
-  to_port   = 443
-  ip_protocol  = "tcp"
+  from_port   = 443
+  to_port     = 443
+  ip_protocol = "tcp"
 
   security_group_id = aws_security_group.alb_sg.id
   cidr_ipv4         = "0.0.0.0/0"
 }
 
 resource "aws_vpc_security_group_ingress_rule" "alb_inbound_https_ipv6" {
-  from_port = 443
-  to_port   = 443
-  ip_protocol  = "tcp"
+  from_port   = 443
+  to_port     = 443
+  ip_protocol = "tcp"
 
   security_group_id = aws_security_group.alb_sg.id
   cidr_ipv6         = "::/0"
 }
 
 resource "aws_vpc_security_group_egress_rule" "alb_outbound" {
-  from_port     = 8080
-  to_port       = 8080
-  ip_protocol   = "tcp"
+  from_port   = 8080
+  to_port     = 8080
+  ip_protocol = "tcp"
 
-  security_group_id             = aws_security_group.alb_sg.id
-  referenced_security_group_id  = aws_security_group.ec2_sg.id
+  security_group_id            = aws_security_group.alb_sg.id
+  referenced_security_group_id = aws_security_group.ec2_sg.id
 }
 
 # Security Group for EC2 Instances
@@ -49,20 +49,22 @@ resource "aws_security_group" "ec2_sg" {
 
 # Rule to allow ALB to access EC2
 resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_from_alb" {
-  from_port     = 8080
-  to_port       = 8080
-  ip_protocol   = "tcp"
+  from_port   = 8080
+  to_port     = 8080
+  ip_protocol = "tcp"
 
-  security_group_id             = aws_security_group.ec2_sg.id
-  referenced_security_group_id  = aws_security_group.alb_sg.id
+  security_group_id            = aws_security_group.ec2_sg.id
+  referenced_security_group_id = aws_security_group.alb_sg.id
 }
 
 # Rule to allow download things. "Recall egress: Who I can make connections to"
 resource "aws_vpc_security_group_egress_rule" "ec2_outbound_from_internet" {
-  ip_protocol   = "-1"
+  from_port = 0
+  to_port = 65535
+  ip_protocol = "-1"
 
-  security_group_id             = aws_security_group.ec2_sg.id
-  cidr_ipv4                     = "0.0.0.0/0"
+  security_group_id = aws_security_group.ec2_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
 }
 
 # Rule for SSH access to EC2 Instances
@@ -71,10 +73,10 @@ data "http" "my_ip" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_ssh" {
-  from_port = 22
-  to_port   = 22
-  ip_protocol  = "tcp"
+  from_port   = 22
+  to_port     = 22
+  ip_protocol = "tcp"
 
-  security_group_id   = aws_security_group.ec2_sg.id
-  cidr_ipv4           = "${chomp(data.http.my_ip.response_body)}/32"
+  security_group_id = aws_security_group.ec2_sg.id
+  cidr_ipv4         = "${chomp(data.http.my_ip.response_body)}/32"
 }
