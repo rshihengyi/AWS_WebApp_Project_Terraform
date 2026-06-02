@@ -6,14 +6,8 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
-
-defaults:
-  run:
-    working-directory: AWS_WebApp_Project_Terraform
-    
 
   # Allows you to run this workflow manually from the Actions tab
 permissions:
@@ -33,16 +27,20 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform fmt
+      - name: Terraform 
+        working-directory: AWS_WebApp_Project_Terraform
         run: terraform fmt -check
 
       - name: Terraform init
+        working-directory: AWS_WebApp_Project_Terraform
         run: terraform init
 
       - name: Terraform validate
+        working-directory: AWS_WebApp_Project_Terraform
         run: terraform validate
 
       - name: Terraform plan
+        working-directory: AWS_WebApp_Project_Terraform
         run: terraform plan
 
           
