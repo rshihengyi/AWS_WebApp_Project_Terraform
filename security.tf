@@ -59,8 +59,8 @@ resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_from_alb" {
 
 # Rule to allow download things. "Recall egress: Who I can make connections to"
 resource "aws_vpc_security_group_egress_rule" "ec2_outbound_from_internet" {
-  from_port = 0
-  to_port = 65535
+  from_port   = 0
+  to_port     = 65535
   ip_protocol = "-1"
 
   security_group_id = aws_security_group.ec2_sg.id
