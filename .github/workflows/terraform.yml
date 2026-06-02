@@ -13,11 +13,16 @@ on:
 permissions:
   id-token: write
   contents: read
+
+defaults:
+  run:
+    working-directory: AWS_WebApp_Project_Terraform
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  run_job_with_aws:
+  AWS_WebApp_Project_Terraform:
     runs-on: ubuntu-latest
     steps:
+    
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6.1.0
         with:
@@ -31,11 +36,11 @@ jobs:
         run: terraform fmt -check
 
       - name: Terraform init
-        working-directory: AWS_WebApp_Project_Terraform
+       # working-directory: AWS_WebApp_Project_Terraform
         run: terraform init
 
       - name: Terraform validate
-        working-directory: AWS_WebApp_Project_Terraform
+       # working-directory: AWS_WebApp_Project_Terraform
         run: terraform validate
 
       - name: Terraform plan
