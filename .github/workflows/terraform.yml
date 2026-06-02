@@ -22,6 +22,9 @@ jobs:
   AWS_WebApp_Project_Terraform:
     runs-on: ubuntu-latest
     steps:
+    # Clones repo 
+      - name: Checkout
+        uses: actions/checkout@v4
     
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6.1.0
@@ -44,7 +47,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform plan
-        working-directory: AWS_WebApp_Project_Terraform
+       # working-directory: AWS_WebApp_Project_Terraform
         run: terraform plan
 
           
