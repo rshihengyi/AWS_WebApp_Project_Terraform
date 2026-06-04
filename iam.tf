@@ -1,7 +1,7 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
 
 resource "aws_iam_role" "ec2_ssm" {
-  name = "SSM Command"
+  name = "SSM-Command"
 
   assume_role_policy = <<EOF
 
