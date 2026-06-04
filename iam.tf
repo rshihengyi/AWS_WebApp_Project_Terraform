@@ -78,6 +78,6 @@ resource "aws_iam_policy" "git_permission_policies" {
 }
 
 resource "aws_iam_role_policy_attachment" "git_attach_policies" {
-  role       = "Access_TF_resources_arch1/GitHubActions"
+  role       = "Access_TF_resources_arch1"
   policy_arn = aws_iam_policy.git_permission_policies.arn
 }
