@@ -51,10 +51,6 @@ resource "aws_iam_role" "git_ssm" {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
           }
         }
-
-        StringLike = {
-          "token.actions.githubusercontent.com:sub" = "repo:${var.GITHUB_USERNAME}/${var.APP_REPO}:ref:refs/heads/main"
-        }
       }
     ]
   })
@@ -70,23 +66,7 @@ resource "aws_iam_policy" "git_permission_policies" {
     {
       "Effect": "Allow",
       "Action": [
-        "ssm:SendCommand",
-        "ssm:GetCommandInvocation",
-        "ssm:ListCommandInvocations",
-        "iam:CreateRole",
-        "iam:DeleteRole",
-        "iam:GetRole",
-        "iam:UpdateAssumeRolePolicy",
-        "iam:AttachRolePolicy",
-        "iam:DetachRolePolicy",
-        "iam:CreateInstanceProfile",
-        "iam:DeleteInstanceProfile",
-        "iam:GetInstanceProfile",
-        "iam:AddRoleToInstanceProfile",
-        "iam:RemoveRoleFromInstanceProfile",
-        "iam:PassRole",
-        "iam:ListAttachedRolePolicies",
-        "iam:ListInstanceProfilesForRole"
+        "iam:*"
       ],
       "Resource": "*"
     }
@@ -98,6 +78,6 @@ resource "aws_iam_policy" "git_permission_policies" {
 }
 
 resource "aws_iam_role_policy_attachment" "git_attach_policies" {
-  role       = "Access_TF_resources_arch1"
+  role       = "Access_TF_resources_arch1/GitHubActions"
   policy_arn = aws_iam_policy.git_permission_policies.arn
 }
