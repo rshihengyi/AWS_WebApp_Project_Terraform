@@ -73,7 +73,20 @@ resource "aws_iam_policy" "git_permission_policies" {
         "ssm:SendCommand",
         "ssm:GetCommandInvocation",
         "ssm:ListCommandInvocations",
-        "iam:PassRole"
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:GetRole",
+        "iam:UpdateAssumeRolePolicy",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:CreateInstanceProfile",
+        "iam:DeleteInstanceProfile",
+        "iam:GetInstanceProfile",
+        "iam:AddRoleToInstanceProfile",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:PassRole",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListInstanceProfilesForRole"
       ],
       "Resource": "*"
     }
@@ -85,6 +98,6 @@ resource "aws_iam_policy" "git_permission_policies" {
 }
 
 resource "aws_iam_role_policy_attachment" "git_attach_policies" {
-  role       = aws_iam_role.git_ssm.name
+  role       = "Access_TF_resources_arch1"
   policy_arn = aws_iam_policy.git_permission_policies.arn
 }
