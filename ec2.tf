@@ -39,3 +39,7 @@ sudo usermod -aG docker ec2-user
 newgrp docker
   EOF
 }
+
+output "ec2_instance_id" {
+  value = aws_instance.web_app.id
+}
