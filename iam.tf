@@ -39,8 +39,8 @@ resource "aws_iam_role" "git_ssm" {
       {
         Action = "sts:AssumeRoleWithWebIdentity"
 
-        Effect   = "Allow"
-        Resource = "*"
+        Effect = "Allow"
+        #Resource = "*"
 
         Principal = {
           Federated = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
@@ -49,6 +49,7 @@ resource "aws_iam_role" "git_ssm" {
         Condition = {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+            "token.actions.githubusercontent.com:sub" = "repo:${var.GITHUB_USERNAME}/${var.APP_REPO}:ref:refs/heads/main"
           }
         }
       }
