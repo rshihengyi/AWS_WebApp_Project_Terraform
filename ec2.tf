@@ -31,14 +31,11 @@ resource "aws_instance" "web_app" {
   }
 
   user_data = <<EOF
-
 #!/bin/bash
 sudo dnf -y install docker
 sudo systemctl restart docker
 sudo groupadd docker
-sudo usermod -aG docker $USER
+sudo usermod -aG docker ec2-user
 newgrp docker
-
-
   EOF
 }
