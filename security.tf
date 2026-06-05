@@ -80,3 +80,7 @@ resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_ssh" {
   security_group_id = aws_security_group.ec2_sg.id
   cidr_ipv4         = "${chomp(data.http.my_ip.response_body)}/32"
 }
+
+output "my_ip_addr" {
+  value = "${chomp(data.http.my_ip.response_body)}/32"
+}
