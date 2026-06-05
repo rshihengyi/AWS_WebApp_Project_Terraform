@@ -29,4 +29,16 @@ resource "aws_instance" "web_app" {
   tags = {
     Name = "WebApp"
   }
+
+  user_data = <<EOF
+
+#!/bin/bash
+sudo dnf -y install docker
+sudo systemctl restart docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+
+  EOF
 }

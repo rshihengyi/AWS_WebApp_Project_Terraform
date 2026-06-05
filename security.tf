@@ -67,20 +67,20 @@ resource "aws_vpc_security_group_egress_rule" "ec2_outbound_from_internet" {
   cidr_ipv4         = "0.0.0.0/0"
 }
 
-# Rule for SSH access to EC2 Instances
-data "http" "my_ip" {
-  url = "https://checkip.amazonaws.com"
-}
+## Rule for SSH access to EC2 Instances
+# data "http" "my_ip" {
+#   url = "https://checkip.amazonaws.com"
+# }
 
-resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_ssh" {
-  from_port   = 22
-  to_port     = 22
-  ip_protocol = "tcp"
+# resource "aws_vpc_security_group_ingress_rule" "ec2_inbound_ssh" {
+#   from_port   = 22
+#   to_port     = 22
+#   ip_protocol = "tcp"
 
-  security_group_id = aws_security_group.ec2_sg.id
-  cidr_ipv4         = "${chomp(data.http.my_ip.response_body)}/32"
-}
+#   security_group_id = aws_security_group.ec2_sg.id
+#   cidr_ipv4         = "${chomp(data.http.my_ip.response_body)}/32"
+# }
 
-output "my_ip_addr" {
-  value = "${chomp(data.http.my_ip.response_body)}/32"
-}
+# output "my_ip_addr" {
+#   value = "${chomp(data.http.my_ip.response_body)}/32"
+# }
