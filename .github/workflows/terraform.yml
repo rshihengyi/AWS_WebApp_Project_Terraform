@@ -14,18 +14,12 @@ permissions:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  Setup-Planning:
+  Verify-Format:
     runs-on: ubuntu-latest
     steps:
     # Clones repo 
       - name: Checkout
         uses: actions/checkout@v4
-    
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v6.1.0
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ID }}:role/Access_TF_resources_arch1
-          aws-region: us-east-1
           
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -33,6 +27,23 @@ jobs:
       - name: Terraform 
         run: terraform fmt -check
 
+  Setup:
+    runs-on: ubuntu-latest
+    needs: Verify-Format
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.1.0
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ID }}:role/Access_TF_resources_arch1
+          aws-region: us-east-1
+      
       - name: Terraform init
         run: terraform init
 
@@ -42,7 +53,7 @@ jobs:
       - name: Terraform plan
         run: terraform plan -out=tfplan
 
-       # Uploads the plan file so the apply job can use it
+       # Uploads the plan file for the Apply job to use
       - name: Upload Plan
         uses: actions/upload-artifact@v4
         with:
@@ -51,11 +62,30 @@ jobs:
 
   Apply:
     runs-on: ubuntu-latest
-    needs: Setup-Planning
+    needs: Setup
     environment: dev
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.1.0
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ID }}:role/Access_TF_resources_arch1
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3          
+    
+    # Download the tfplan to use
+      - name: Download Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+    
       - name: Terraform init
         run: terraform init
-    
+
+    # Apply using the tfplan 
       - name: Terraform apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve tfplan
