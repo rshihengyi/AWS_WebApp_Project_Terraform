@@ -50,6 +50,7 @@ resource "aws_iam_role" "git_ssm" {
           StringLike = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
             "token.actions.githubusercontent.com:sub" = "repo:rshihengyi/AWS_WebApp_Project:*"
+            "token.actions.githubusercontent.com:sub" = "repo:rshihengyi/AWS_WebApp_Project_Terraform:*"
           }
         }
       }
