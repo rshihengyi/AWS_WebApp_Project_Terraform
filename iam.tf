@@ -44,7 +44,7 @@ resource "aws_iam_role" "git_ssm_tf" {
         #Resource = "*"
 
         Principal = {
-          Federated = "arn:aws:iam::536984667329:oidc-provider/token.actions.githubusercontent.com"
+          Federated = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
         }
 
         Condition = {
@@ -117,7 +117,7 @@ resource "aws_iam_role" "git_ssm_app" {
         #Resource = "*"
 
         Principal = {
-          Federated = "arn:aws:iam::536984667329:oidc-provider/token.actions.githubusercontent.com"
+          Federated = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
         }
 
         Condition = {
