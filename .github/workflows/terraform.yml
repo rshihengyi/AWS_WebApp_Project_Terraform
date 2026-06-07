@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Terraform Plan
+name: Terraform Plan & Apply
 
 # Controls when the workflow will run
 on:
@@ -51,14 +51,14 @@ jobs:
         run: terraform validate
 
       - name: Terraform plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tf_plan
 
        # Uploads the plan file for the Apply job to use
       - name: Upload Plan
         uses: actions/upload-artifact@v4
         with:
-          name: tfplan
-          path: tfplan
+          name: tf_plan
+          path: tf_plan
 
   Apply:
     runs-on: ubuntu-latest
@@ -77,15 +77,15 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3          
     
-    # Download the tfplan to use
+    # Download the tf_plan to use
       - name: Download Plan
         uses: actions/download-artifact@v4
         with:
-          name: tfplan
+          name: tf_plan
     
       - name: Terraform init
         run: terraform init
 
-    # Apply using the tfplan 
+    # Apply using the tf_plan 
       - name: Terraform apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve tf_plan
