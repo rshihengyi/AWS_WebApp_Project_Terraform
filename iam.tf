@@ -47,11 +47,15 @@ resource "aws_iam_role" "git_ssm" {
         }
 
         Condition = {
-          StringLike = {
+        StringLike = {
+            "token.actions.githubusercontent.com:sub" = [
+            "repo:${var.GITHUB_USERNAME}/${var.TF_REPO}:*",
+            "repo:${var.GITHUB_USERNAME}/${var.APP_REPO}:*"
+            ]
+        }
+        StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-            "token.actions.githubusercontent.com:sub" = ["repo:rshihengyi/AWS_WebApp_Project:*",
-            "repo:rshihengyi/AWS_WebApp_Project_Terraform:*"]
-          }
+        }
         }
       }
     ]

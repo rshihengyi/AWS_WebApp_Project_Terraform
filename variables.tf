@@ -5,3 +5,7 @@ variable "GITHUB_USERNAME" {
 variable "APP_REPO" {
   type = string
 }
+
+variable "TF_REPO" {
+  type = string
+}
