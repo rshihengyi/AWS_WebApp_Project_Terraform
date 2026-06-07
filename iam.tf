@@ -47,15 +47,15 @@ resource "aws_iam_role" "git_ssm" {
         }
 
         Condition = {
-        StringLike = {
+          StringLike = {
             "token.actions.githubusercontent.com:sub" = [
-            "repo:${var.GITHUB_USERNAME}/${var.TF_REPO}:*",
-            "repo:${var.GITHUB_USERNAME}/${var.APP_REPO}:*"
+              "repo:${var.GITHUB_USERNAME}/${var.TF_REPO}:*",
+              "repo:${var.GITHUB_USERNAME}/${var.APP_REPO}:*"
             ]
-        }
-        StringEquals = {
+          }
+          StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-        }
+          }
         }
       }
     ]
