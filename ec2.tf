@@ -28,6 +28,8 @@ resource "aws_instance" "web_app" {
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
   tags = {
     Name = "WebApp"
+    App  = "Static-Portfolio"
+    Env  = "dev"
   }
 
   user_data = <<EOF
@@ -38,8 +40,4 @@ sudo groupadd docker
 sudo usermod -aG docker ec2-user
 newgrp docker
   EOF
-}
-
-output "ec2_instance_id" {
-  value = aws_instance.web_app.id
 }
