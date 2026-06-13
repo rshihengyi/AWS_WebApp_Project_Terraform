@@ -17,9 +17,9 @@ with tools such as Terraform, Docker, and various foundational AWS services.
 - ACM Certification: certificate for dev.robs-portfolio.com
 - S3 (Remote State Backend)
 - IAM Roles (SSM Agent, EC2, GitHub Actions permissions)
-  
+
+<h1>Web Application Architecture Flow Chart</h1>
 <img width="2105" height="1540" alt="image" src="https://github.com/user-attachments/assets/df9e4a3d-9c47-4cf9-a72c-5350cc29ff34" />
-Figure: Web Application Architecture Flow Chart
 
 <h1>Project Documentation</h1>
 https://1drv.ms/w/c/d18af1f250bff2cb/IQCMALwxe5DlRImUC7b7NCChAR8tm6k4imerkNQGmFQoZ4o?e=khMGve 
