@@ -19,7 +19,7 @@ with tools such as Terraform, Docker, and various foundational AWS services.
 - IAM Roles (SSM Agent, EC2, GitHub Actions permissions)
 
 <h1>Full Architecture Flow Chart</h1>
-<img width="877" height="608" alt="image" src="https://github.com/user-attachments/assets/052c20f7-3c3a-4737-a358-d03718317db4" />
+<img width="2047" height="1527" alt="image" src="https://github.com/user-attachments/assets/9ac012c1-23ab-491e-b383-092b4b964996" />
 
 <h1>Project Documentation</h1>
 https://1drv.ms/w/c/d18af1f250bff2cb/IQCMALwxe5DlRImUC7b7NCChAR8tm6k4imerkNQGmFQoZ4o?e=khMGve 
