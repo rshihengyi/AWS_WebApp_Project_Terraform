@@ -1,11 +1,11 @@
+<h1>AWS Static Portfolio Web Application Project Summary</h1>
+The aim of this project is to automate the deployment of a containerized static webpage into an AWS cloud architecture provisioned in Terraform using CI/CD pipelines with GitHub Actions. The project is split into two parts, infrastructure and app deployment automation which is done with both the AWS_WebApp_Project_Terraform
+and AWS_WebApp_Project repositories. 
+
 <h1>AWS Web Application Infrastructure (Terraform)</h1>
+This repository contains the Terraform code that creates the infrastructure of the Web Application to be hosted in and configures the internal network necessary for the AWS components to communicate properly. IAM roles needed for workflows from this repository and the AWS_WebApp_Project repository are also created with Terraform. Below is the list of AWS components created with Terraform. 
 
-This project provisions a simple, development-style AWS web infrastructure using Terraform.
-The architecture deploys a containerized web application on an EC2 instance behind an Application Load Balancer (ALB), with traffic routed through Route 53 and secured via HTTPS.
-
-The goal of this project is to demonstrate Infrastructure as Code (IaC) practices and core AWS networking concepts such as VPC design, load balancing, and security groups. 
-Through this project, I aimed to strengthen my understanding of cloud architecture, automation, and security configuration while working
-with tools such as Terraform, Docker, and various foundational AWS services.
+*Note: The S3 bucket for the remote state backend was manually created as a bootstrap step since provisioning it with Terraform creates circular dependency and adds additional complexity for its purpose. The backend.tf simply stores the .tfstate file once Terraform is initialized locally (terraform init -migrate-state)
 
 <h1>Web Application Infrastructure Components</h1>
 
@@ -15,8 +15,7 @@ with tools such as Terraform, Docker, and various foundational AWS services.
 - Application Load Balancer
 - Route 53
 - ACM Certification: certificate for dev.robs-portfolio.com
-- S3 (Remote State Backend)
-- IAM Roles (SSM Agent, EC2, GitHub Actions permissions)
+- IAM Roles (SSM Agent, EC2, GitHub Actions)
 
 <h1>Full Architecture Flow Chart</h1>
 <img width="2047" height="1527" alt="image" src="https://github.com/user-attachments/assets/9ac012c1-23ab-491e-b383-092b4b964996" />
