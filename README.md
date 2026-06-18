@@ -21,4 +21,4 @@ This repository contains the Terraform code that creates the infrastructure of t
 <img width="2047" height="1527" alt="image" src="https://github.com/user-attachments/assets/9ac012c1-23ab-491e-b383-092b4b964996" />
 
 <h1>Project Documentation</h1>
-https://1drv.ms/w/c/d18af1f250bff2cb/IQCMALwxe5DlRImUC7b7NCChAR8tm6k4imerkNQGmFQoZ4o?e=khMGve 
+https://1drv.ms/w/c/d18af1f250bff2cb/IQDDwiEVOjUtRrKC2TQTrDk_AU5VjMMQKTsa0N9dgRNVQzA?e=kSSxlt
