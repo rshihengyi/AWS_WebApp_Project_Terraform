@@ -1,3 +1,11 @@
+my_region = "us-east-1"
+
+region_a = "us-east-1a"
+
+region_b = "us-east-1b"
+
+db_password = "ThisIsATest123"
+
 GITHUB_USERNAME = "rshihengyi"
-APP_REPO        = "AWS_WebApp_Project"
-TF_REPO         = "AWS_WebApp_Project_Terraform"
+
+TF_REPO = "AWS-Enterprise-Kubernetes-Platform_Terraform-Infra"
